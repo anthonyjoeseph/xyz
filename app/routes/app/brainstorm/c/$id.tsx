@@ -14,6 +14,7 @@ import { useTypedLoaderData } from "remix-typedjson/dist/remix";
 import { notFound } from "remix-utils";
 import { CountDown } from "~/components/CountDown";
 import { Tabs } from "~/components/Tabs";
+import { Container } from "~/components/Container";
 
 const paramsSchema = z.object({ id: z.string() });
 export const loader = async ({ params }: DataFunctionArgs) => {
@@ -31,99 +32,101 @@ export default function Challenge() {
   const submissions = challenge.submissions;
 
   return (
-    <div className="mx-auto container mb-12 px-10 pt-12">
-      <section className="flex flex-wrap gap-5 justify-between pb-5">
-        <Title order={2}>{challenge.title}</Title>
-        <Center className="flex flex-wrap gap-5">
-          <Link to={`/app/brainstorm/c/${challenge.id}/review`}>
-            <Button variant="default" color="dark" radius="md" className="mx-auto">
-              Claim to Review
-            </Button>
-          </Link>
-          <Link to={`/app/brainstorm/c/${challenge.id}/claim`}>
-            <Button radius="md" className="mx-auto">
-              Claim to Submit
-            </Button>
-          </Link>
-        </Center>
-      </section>
-      <section className="flex flex-col space-y-7 pb-12">
-        <div className="flex flex-wrap gap-x-8 gap-y-4">
-          <Detail>
-            <Detail.Title>Sponsor</Detail.Title>
-            <Author.Author />
-          </Detail>
-          <Detail>
-            <Detail.Title>Chain/Project</Detail.Title>
-            <div className="flex space-x-2">
-              <ProjectBadge slug="solana" />
-              <ProjectBadge slug="solana" />
-            </div>
-          </Detail>
-          <Detail>
-            <Detail.Title>Reward Pool</Detail.Title>
-            <Badge color="gray" size="lg">
-              100 SOL
-            </Badge>
-          </Detail>
-          <Detail>
-            <Detail.Title>Submissions</Detail.Title>
-            <Badge color="gray" size="lg">
-              1000
-            </Badge>
-          </Detail>
-          <Detail>
-            <Detail.Title>Reviews</Detail.Title>
-            <Badge color="gray" size="lg">
-              99
-            </Badge>
-          </Detail>
-          <Detail>
-            <Detail.Title>Winners</Detail.Title>
-            <Badge color="gray" size="lg">
-              <Text size="sm" className="normal-case font-normal">
-                Pending
-              </Text>
-            </Badge>
-          </Detail>
-        </div>
-        <Text color="dimmed" className="max-w-2xl">
-          What's the challenge What web3 challenge do you want to crowdsource potential analytics questions for? Why?
-          What's the challenge What web3 challenge do you want to crowdsource potential analytics questions
-        </Text>
-      </section>
+    <Container className="py-16">
+      <div className="mx-auto container mb-12 px-10">
+        <section className="flex flex-wrap gap-5 justify-between pb-5">
+          <Title order={2}>{challenge.title}</Title>
+          <Center className="flex flex-wrap gap-5">
+            <Link to={`/app/brainstorm/c/${challenge.id}/review`}>
+              <Button variant="default" color="dark" radius="md" className="mx-auto">
+                Claim to Review
+              </Button>
+            </Link>
+            <Link to={`/app/brainstorm/c/${challenge.id}/claim`}>
+              <Button radius="md" className="mx-auto">
+                Claim to Submit
+              </Button>
+            </Link>
+          </Center>
+        </section>
+        <section className="flex flex-col space-y-7 pb-12">
+          <div className="flex flex-wrap gap-x-8 gap-y-4">
+            <Detail>
+              <Detail.Title>Sponsor</Detail.Title>
+              <Author.Author />
+            </Detail>
+            <Detail>
+              <Detail.Title>Chain/Project</Detail.Title>
+              <div className="flex space-x-2">
+                <ProjectBadge slug="solana" />
+                <ProjectBadge slug="solana" />
+              </div>
+            </Detail>
+            <Detail>
+              <Detail.Title>Reward Pool</Detail.Title>
+              <Badge color="gray" size="lg">
+                100 SOL
+              </Badge>
+            </Detail>
+            <Detail>
+              <Detail.Title>Submissions</Detail.Title>
+              <Badge color="gray" size="lg">
+                1000
+              </Badge>
+            </Detail>
+            <Detail>
+              <Detail.Title>Reviews</Detail.Title>
+              <Badge color="gray" size="lg">
+                99
+              </Badge>
+            </Detail>
+            <Detail>
+              <Detail.Title>Winners</Detail.Title>
+              <Badge color="gray" size="lg">
+                <Text size="sm" className="normal-case font-normal">
+                  Pending
+                </Text>
+              </Badge>
+            </Detail>
+          </div>
+          <Text color="dimmed" className="max-w-2xl">
+            What's the challenge What web3 challenge do you want to crowdsource potential analytics questions for? Why?
+            What's the challenge What web3 challenge do you want to crowdsource potential analytics questions
+          </Text>
+        </section>
 
-      <section className="flex flex-col-reverse md:flex-row space-y-reverse space-y-7 md:space-y-0 gap-x-5">
-        <main className="flex-1">
-          <Tabs>
-            <Tabs.List>
-              <Tabs.Tab> {`Submissions (${submissions.length})`} </Tabs.Tab>
-              <Tabs.Tab> Prerequisites </Tabs.Tab>
-              <Tabs.Tab> Rewards </Tabs.Tab>
-              <Tabs.Tab> Timeline & Deadline </Tabs.Tab>
-              <Tabs.Tab> Participants </Tabs.Tab>
-            </Tabs.List>
-            <Tabs.Panels>
-              <Tabs.Panel>
-                <Submissions submissions={submissions} />
-              </Tabs.Panel>
-              <Tabs.Panel>
-                <Prerequisites />
-              </Tabs.Panel>
-              <Tabs.Panel>
-                <Rewards />
-              </Tabs.Panel>
-              <Tabs.Panel>
-                <Timeline />
-              </Tabs.Panel>
-              <Tabs.Panel>
-                <Participants />
-              </Tabs.Panel>
-            </Tabs.Panels>
-          </Tabs>
-        </main>
-      </section>
-    </div>
+        <section className="flex flex-col-reverse md:flex-row space-y-reverse space-y-7 md:space-y-0 gap-x-5">
+          <main className="flex-1">
+            <Tabs>
+              <Tabs.List>
+                <Tabs.Tab> {`Submissions (${submissions.length})`} </Tabs.Tab>
+                <Tabs.Tab> Prerequisites </Tabs.Tab>
+                <Tabs.Tab> Rewards </Tabs.Tab>
+                <Tabs.Tab> Timeline & Deadline </Tabs.Tab>
+                <Tabs.Tab> Participants </Tabs.Tab>
+              </Tabs.List>
+              <Tabs.Panels>
+                <Tabs.Panel>
+                  <Submissions submissions={submissions} />
+                </Tabs.Panel>
+                <Tabs.Panel>
+                  <Prerequisites />
+                </Tabs.Panel>
+                <Tabs.Panel>
+                  <Rewards />
+                </Tabs.Panel>
+                <Tabs.Panel>
+                  <Timeline />
+                </Tabs.Panel>
+                <Tabs.Panel>
+                  <Participants />
+                </Tabs.Panel>
+              </Tabs.Panels>
+            </Tabs>
+          </main>
+        </section>
+      </div>
+    </Container>
   );
 }
 

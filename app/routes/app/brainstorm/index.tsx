@@ -20,6 +20,7 @@ import type { UseDataFunctionReturn } from "remix-typedjson/dist/remix";
 import { getParamsOrFail } from "remix-params-helper";
 import { LaborMarketSearchSchema } from "~/domain/labor-market";
 import { ProjectBadge, TextWithIcon } from "~/components/ProjectBadge";
+import { Container } from "~/components/Container";
 
 export const loader = async (data: DataFunctionArgs) => {
   const url = new URL(data.request.url);
@@ -40,62 +41,64 @@ export default function Brainstorm() {
   };
 
   return (
-    <div className="mx-auto container space-y-7 px-3 mb-10">
-      <section className="flex flex-col md:flex-row space-y-7 md:space-y-0 space-x-0 md:space-x-5">
-        <main className="flex-1">
-          <div className="space-y-5 max-w-3xl">
-            <Title order={1}>Challenge Marketplaces</Title>
-            <div className="space-y-2">
-              <Text size="lg" color="brand.4">
-                Crowdsource the best questions for crypto analysts to answer about any web3 topic
-              </Text>
-              <Text color="dimmed">
-                Jump into challenge marketplaces to launch or discover brainstorm challenges. Join challenges to submit
-                your best question ideas or review peers' submissions to surface and reward winners
-              </Text>
+    <Container className="py-16">
+      <div className="mx-auto container space-y-7 px-3 mb-10">
+        <section className="flex flex-col md:flex-row space-y-7 md:space-y-0 space-x-0 md:space-x-5">
+          <main className="flex-1">
+            <div className="space-y-5 max-w-3xl">
+              <Title order={1}>Challenge Marketplaces</Title>
+              <div className="space-y-2">
+                <Text size="lg" color="brand.4">
+                  Crowdsource the best questions for crypto analysts to answer about any web3 topic
+                </Text>
+                <Text color="dimmed">
+                  Jump into challenge marketplaces to launch or discover brainstorm challenges. Join challenges to
+                  submit your best question ideas or review peers' submissions to surface and reward winners
+                </Text>
+              </div>
             </div>
-          </div>
-        </main>
-        <aside className="md:w-1/5">
-          <Center>
-            <Link to="/app/brainstorm/new">
-              <Button radius="md" className="mx-auto">
-                Create Marketplace
-              </Button>
-            </Link>
-          </Center>
-        </aside>
-      </section>
+          </main>
+          <aside className="md:w-1/5">
+            <Center>
+              <Link to="/app/brainstorm/new">
+                <Button radius="md" className="mx-auto">
+                  Create Marketplace
+                </Button>
+              </Link>
+            </Center>
+          </aside>
+        </section>
 
-      <section>
-        <Title order={3}>
-          Challenge Marketplaces
-          <Text span color="dimmed">
-            ({totalResults})
-          </Text>
-        </Title>
-        <Divider />
-      </section>
+        <section>
+          <Title order={3}>
+            Challenge Marketplaces
+            <Text span color="dimmed">
+              ({totalResults})
+            </Text>
+          </Title>
+          <Divider />
+        </section>
 
-      <section className="flex flex-col-reverse md:flex-row space-y-reverse gap-y-7 gap-x-5">
-        <main className="flex-1">
-          <div className="space-y-5">
-            <MarketplacesTable marketplaces={marketplaces} />
-            <div className="w-fit m-auto">
-              <Pagination
-                page={params.page}
-                hidden={totalResults === 0}
-                total={Math.ceil(totalResults / params.first)}
-                onChange={onPaginationChange}
-              />
+        <section className="flex flex-col-reverse md:flex-row space-y-reverse gap-y-7 gap-x-5">
+          <main className="flex-1">
+            <div className="space-y-5">
+              <MarketplacesTable marketplaces={marketplaces} />
+              <div className="w-fit m-auto">
+                <Pagination
+                  page={params.page}
+                  hidden={totalResults === 0}
+                  total={Math.ceil(totalResults / params.first)}
+                  onChange={onPaginationChange}
+                />
+              </div>
             </div>
-          </div>
-        </main>
-        <aside className="md:w-1/5">
-          <SearchAndFilter />
-        </aside>
-      </section>
-    </div>
+          </main>
+          <aside className="md:w-1/5">
+            <SearchAndFilter />
+          </aside>
+        </section>
+      </div>
+    </Container>
   );
 }
 
