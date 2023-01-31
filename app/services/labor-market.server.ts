@@ -48,7 +48,7 @@ export const searchLaborMarkets = async (params: LaborMarketSearch) => {
 export const searchLaborMarketsMongo = async (params: LaborMarketSearch) => {
   return mongo.laborMarkets
     .find({
-      $text: { $search: params.q ?? "" },
+      // $text: { $search: params.q ?? "" },
       "appData.projectIds": params.project ? { $in: params.project?.map ?? [] } : undefined,
     })
     .sort({ [params.sortBy]: params.order })
@@ -64,7 +64,7 @@ export const searchLaborMarketsMongo = async (params: LaborMarketSearch) => {
  */
 export const countLaborMarkets = async (params: LaborMarketSearch) => {
   // TODO: Filter on "type" once we start saving that in the appData
-  return mongo.laborMarkets.countDocuments({ $text: { $search: params.q ?? "" } });
+  return mongo.laborMarkets.countDocuments();
 };
 
 /**
@@ -110,7 +110,7 @@ export const documentLaborMarket = async ({ address, block }: { address: string;
     address,
     owner: await contract.owner({ blockTag: block }),
     reputationConfig: {
-      submitMin: config.reputationConfig.submitMin.toNumber(),
+      submitMin: config.repu.submitMin.toNumber(),
       submitMax: config.reputationConfig.submitMax.toNumber(),
     },
     maintainerBadge: config.maintainerBadge,
@@ -121,6 +121,35 @@ export const documentLaborMarket = async ({ address, block }: { address: string;
     appData,
   };
 };
+
+// {
+//   marketUri: data.ipfsHash,
+//   owner: data.userAddress as `0x${string}`,
+//   modules: {
+//     enforcement: ConstantLikertEnforcement.address,
+//     network: LaborMarketNetwork.address,
+//     payment: PaymentModule.address,
+//     reputation: ReputationModule.address,
+//   },
+//   delegateBadge: {
+//     token: data.launch.access === "delegates" ? (data.launch.badgerAddress as `0x${string}`) : "0x0", // hardcoded to a Badger address
+//     tokenId: BigNumber.from(data.launch.access === "delegates" ? data.launch.badgerTokenId : 0),
+//   },
+//   maintainerBadge: {
+//     token: data.reviewBadgerAddress as `0x${string}`,
+//     tokenId: BigNumber.from(data.reviewBadgerTokenId),
+//   },
+//   reputationBadge: {
+//     token: ReputationToken.address,
+//     tokenId: BigNumber.from(4),
+//   },
+//   reputationParams: {
+//     rewardPool: BigNumber.from(5000),
+//     signalStake: BigNumber.from(5),
+//     submitMin: BigNumber.from(10),
+//     submitMax: BigNumber.from(10000e18), //todo: valid?
+//   },
+// },
 
 export type LaborMarketDoc = Awaited<ReturnType<typeof documentLaborMarket>>;
 
